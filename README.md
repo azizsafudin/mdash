@@ -65,3 +65,14 @@ export { default as widgetN } from './widgetN.vue'
 For now you have to use `localStorage.clear()` every time you make a change to your widget's manifest for changes to take effect (basically resetting everything).
 
 Widget names have to be unique, check `widgets/index.js` to make sure yours is unique, if not one will override the other.
+
+## To do
+- Widget settings UI
+    - Basic structure implemented in WidgetLoader
+    - Allow users to set preferences for each widget in the UI
+- More widgets
+    - Prayer time
+    - Quotes
+    - Welcome message
+    - To do list
+    - Suggest more! (Make a github issue)

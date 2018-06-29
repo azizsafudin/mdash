@@ -1,0 +1,10 @@
+{
+  "name": "mdash",
+  "description": "A chrome extension made for msociety",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "permissions": ["management"],
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  }
+}

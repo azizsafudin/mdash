@@ -1,9 +1,9 @@
 # ﷽
 
-# mdash
+# —mdash
 
 > A dashboard for chrome browser
-
+> Made for [msociety](https://github.com/SGTinkers). Learn about vue components by making widgets.
 ## Build Setup
 
 ``` bash
@@ -16,9 +16,9 @@ npm run dev
 # build for production with minification
 npm run build
 
+# Copy `manifest.json` into the `/dist folder
 # install in chrome by dragging and dropping the /dist folder in chrome://extensions
 ```
-
 ## Making your own widget
 Go to `src/components/widgets/` and make a `<your_widget_name>.vue` file. See `clock.vue` and `example.vue` for examples.
 

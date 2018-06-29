@@ -1,0 +1,22 @@
+@import "../../../node_modules/bulma/sass/utilities/initial-variables.sass";
+@import "../../../node_modules/bulma/sass/utilities/functions.sass";
+
+//change primary variables here.
+
+@import "../../../node_modules/bulma/sass/utilities/derived-variables.sass";
+
+//add custom css here.
+$notification-radius: 10px;
+@import "../../../node_modules/bulma/bulma.sass";
+
+@import "../../../node_modules/bulma-extensions/dist/css/bulma-extensions.min.css";
+
+//@import url('https://fonts.googleapis.com/css?family=Muli|Convergence');
+//
+//.navbar{
+//  font-family: 'Convergence', sans-serif;
+//}
+
+.is-transparent {
+  background: none;
+}

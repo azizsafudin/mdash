@@ -46,5 +46,19 @@ export default {
     } catch (e) {
       throw e;
     }
+  },
+  getLayout(){
+    try {
+      return JSON.parse(localStorage.getItem('mdash-layout'));
+    } catch (e) {
+      throw e;
+    }
+  },
+  setLayout(val){
+    try {
+      localStorage.setItem('mdash-layout', JSON.stringify(val));
+    } catch (e) {
+      throw e;
+    }
   }
 };

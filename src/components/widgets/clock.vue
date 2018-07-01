@@ -17,10 +17,10 @@ const manifest =  {
                     },
                     layout: {             //  default layout
                       i: widget_name,         //  Must be the same name
-                      x: 3,
-                      y: 1,
-                      w: 6,
-                      h: 3,
+                      x: 7,
+                      y: 2,
+                      w: 10,
+                      h: 5,
                     },
                   };
 

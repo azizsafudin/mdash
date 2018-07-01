@@ -25,8 +25,8 @@ const manifest =    {
                         i: widget_name,
                         x: 0,                               //  x position on load (starts at 0)
                         y: 0,                               //  y postion on load (starts at 0)
-                        w: 3,                               //  how many columns wide is the widget
-                        h: 1,                               //  how many rows tall is the widget
+                        w: 2,                               //  how many columns wide is the widget
+                        h: 2,                               //  how many rows tall is the widget
                         /*  ---- The rest of the params are optional (comment out if not using)---- */
 //                        minW: 1,                            //  min width of widget
 //                        minH: 1,                            //  min height of widget

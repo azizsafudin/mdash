@@ -5,6 +5,12 @@
         <div class="modal-container notification" @click.stop>
           <button class="delete" @click="$emit('close')"></button>
           <p class="title">&mdash;{{msg.title}}</p>
+          <ul v-for="widget in list">
+            <li>{{widget.name}}
+              <button class="button" @click="$emit('add', widget.name)">Add Widget</button>
+              <button class="button" @click="$emit('remove', widget.name)">Remove Widget</button>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -13,16 +19,22 @@
 
 <script>
 import storage from '../helpers/storage';
-import * as components from './WidgetsLoader'
+import widgets from './WidgetsLoader';
 
 export default {
-  name: 'Settings',
+  name: 'WidgetList',
   data: () => ({
     msg: {
-      title: 'settings',
+      title: 'Add Widget',
     },
-    settings: storage.get('mdash-settings'),
   }),
+  computed:{
+    list(){
+      let layout = storage.getLayout();
+
+      return widgets.list;
+    }
+  }
 };
 </script>
 
@@ -46,13 +58,12 @@ export default {
   }
 
   .modal-container {
-    width: 70%;
+    width: 30%;
     min-height:50%;
     max-height:90%;
     margin: 0px auto;
     padding: 20px 30px;
     background-color: #fff;
-    /*border-radius: 10px;*/
     box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
     transition: all .3s ease;
   }

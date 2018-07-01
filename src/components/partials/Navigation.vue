@@ -32,9 +32,14 @@
               <i class="fas fa-times"></i>
             </span>
           </a>
-          <a class="navbar-item" @click="$emit('clicked', 'settings')">
+          <a class="navbar-item tooltip is-tooltip-bottom" data-tooltip="—mdash settings" @click="$emit('clicked', 'settings')">
             <span class="icon">
               <i class="fas fa-cog"></i>
+            </span>
+          </a>
+          <a class="navbar-item tooltip is-tooltip-bottom" data-tooltip="Add new widget" @click="$emit('clicked', 'widgetlist')">
+            <span class="icon">
+              <i class="fas fa-plus"></i>
             </span>
           </a>
         </div>
@@ -68,6 +73,9 @@ export default {
 </script>
 
 <style>
+  .icon {
+    font-size: 0.75em;
+  }
   /* Enter and leave animations can use different */
   /* durations and timing functions.              */
   .slide-fade-enter-active {

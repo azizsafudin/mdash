@@ -2,15 +2,32 @@
   <transition name="modal">
     <div class="modal-mask" @click="$emit('close')">
       <div class="modal-wrapper">
-        <div class="modal-container notification" @click.stop>
+        <div class="modal-container notification" v-bind:class="theme" @click.stop>
           <button class="delete" @click="$emit('close')"></button>
-          <p class="title">&mdash;{{msg.title}}</p>
-          <ul v-for="widget in list">
-            <li>{{widget.name}}
-              <button class="button" @click="$emit('add', widget.name)">Add Widget</button>
-              <button class="button" @click="$emit('remove', widget.name)">Remove Widget</button>
-            </li>
-          </ul>
+          <p class="title" v-bind:class="theme">&mdash;{{msg.title}}</p>
+          <div v-for="widget in list" class="scrollbox">
+            <div class="box is-capitalized" style="margin-bottom:0.5em;">
+              {{widget.name}}
+              <button
+                class="button is-primary is-pulled-right"
+                @click="handleClick('add', widget.name)"
+                v-if="!isAdded(widget.name)"
+              >
+                <span class="icon">
+                  <i class="fas fa-plus"></i>
+                </span>
+              </button>
+              <button
+                class="button is-danger is-pulled-right"
+                @click="handleClick('remove', widget.name)"
+                v-else
+              >
+                <span class="icon">
+                  <i class="fas fa-times"></i>
+                </span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -20,6 +37,7 @@
 <script>
 import storage from '../helpers/storage';
 import widgets from './WidgetsLoader';
+import _ from 'lodash';
 
 export default {
   name: 'WidgetList',
@@ -27,12 +45,30 @@ export default {
     msg: {
       title: 'Add Widget',
     },
+    layout: storage.getLayout(),
+    dark: storage.getSettings('mdash').dark,
   }),
   computed:{
     list(){
-      let layout = storage.getLayout();
-
       return widgets.list;
+    },
+    theme(){
+      return{
+        'has-text-white': this.dark,
+        'has-text-black': !this.dark,
+        'is-dark': this.dark,
+        'is-light': !this.dark,
+      }
+    }
+  },
+  methods:{
+    handleClick(action, payload){
+      this.$emit(action, payload);
+      this.layout = storage.getLayout();
+    },
+    isAdded(name){
+      let item = _.find(this.layout, function(o){return o.i === name});
+      return !!item;
     }
   }
 };
@@ -58,14 +94,19 @@ export default {
   }
 
   .modal-container {
-    width: 30%;
-    min-height:50%;
+    width: 25%;
+    min-height:80%;
     max-height:90%;
     margin: 0px auto;
     padding: 20px 30px;
-    background-color: #fff;
     box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
     transition: all .3s ease;
+    position: fixed;
+    bottom:0;
+    right:0;
+  }
+  .notification{
+    border-top-left-radius: 10px;
   }
 
   .modal-enter {

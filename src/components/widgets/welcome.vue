@@ -2,17 +2,16 @@
 <template>
   <div>
     <div v-if="!isNameSet">
-      <h3 class="title has-text-centered">Hello there, what's your name? </h3>
+      <h3 class="title has-text-centered" v-bind:class="theme">Hello there, what's your name? </h3>
       <input
         v-model="newName" class="input myinput is-medium has-text-centered"
         type="text"
         @keyup.enter="submit"
-        @focus="focus = true"
-        @blur="focus = false"
-        v-bind:class="{active: focus}">
+        v-bind:class="theme"
+      >
     </div>
     <div v-else>
-      <h5 class="title has-text-centered" v-if="!editMode">
+      <h5 class="title has-text-centered" v-if="!editMode" v-bind:class="theme">
         Welcome back, <span v-on:dblclick="editMode = true;" class="name">{{name}}</span>!
       </h5>
       <input
@@ -20,9 +19,7 @@
         type="text"
         @keyup.enter="submit"
         @keyup.esc="editMode = false"
-        @focus="focus = true"
-        @blur="focus = false"
-        v-bind:class="{active: focus}"
+        v-bind:class="theme"
         v-if="editMode"
         autofocus>
     </div>
@@ -35,6 +32,7 @@ import storage from '../../helpers/storage';    //  use this to access localStor
 const widget_name = 'welcome';                  //  make it same as file name for ease
 const manifest =    {
                       name: widget_name,
+                      description: 'Welcome message widget',
                       settings: {
                         name: '',
                       },
@@ -52,7 +50,7 @@ export default {
   data: () => ({
     name: storage.getSettings(manifest.name).name,
     newName: storage.getSettings(manifest.name).name,
-    focus: false,
+    dark: storage.getSettings('mdash').dark,
     editMode: false,
   }),
   manifest: manifest, // REQUIRED
@@ -66,6 +64,13 @@ export default {
   computed: {
     isNameSet() {
       return this.name.length > 0;
+    },
+    theme(){
+      return {
+        'has-text-white': this.dark,
+        'has-text-black': !this.dark,
+        'dark' : this.dark,
+      }
     }
   }
 };
@@ -80,7 +85,10 @@ export default {
     box-shadow: none;
     border-bottom: rgba(0,0,0,0.2) solid 1px;
   }
-  .active{
+  .myinput.dark {
+    border-bottom: rgba(255,255,255,0.2) solid 1px;
+  }
+  .myinput.active{
     border-bottom: rgba(0,0,0,0.7) solid 1px;
   }
   .name{

@@ -62,6 +62,23 @@ export { default as widget2 } from './widget2.vue'
 export { default as widgetN } from './widgetN.vue'
 ```
 
+## Helpers
+
+```javascript
+import storage from 'src/helpers/storage';
+
+//get dark mode flag from mdash settings.
+let dark_mode = storage.getSettings('mdash').dark;
+
+//get settings for your widget
+let my_widget_settings = storage.getSettings('mywidget');
+
+//save changes to my widget's settings
+storage.setSettings('mywidget');
+```
+Use `storage.getSettings(widget_name)` to access saved settings for your own widget. 
+Or `storage.getSettings('mdash')` for mdash settings.
+
 For now you have to use `localStorage.clear()` every time you make a change to your widget's manifest for changes to take effect (basically resetting everything).
 
 Widget names have to be unique, check `widgets/index.js` to make sure yours is unique, if not one will override the other.

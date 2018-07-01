@@ -6,7 +6,9 @@
 @import "../../../node_modules/bulma/sass/utilities/derived-variables.sass";
 
 //add custom css here.
-$notification-radius: 10px;
+//$notification-radius: 10px;
+
+
 @import "../../../node_modules/bulma/bulma.sass";
 
 //@import "../../../node_modules/bulma-extensions/dist/css/bulma-extensions.min.css";
@@ -19,4 +21,11 @@ $notification-radius: 10px;
 
 .is-transparent {
   background: none;
+}
+
+html {
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-image: url('/static/img/background-2.jpg');
 }

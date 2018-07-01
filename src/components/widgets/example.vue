@@ -4,8 +4,8 @@
 <!--https://vuejs.org/v2/guide/syntax.html-->
 <template>
   <div>
-    <h3 class="title">Example Widget</h3>
-    <h5 class="subtitle">{{settings.message}}</h5>
+    <h3 class="title" v-bind:class="theme">Example Widget</h3>
+    <h5 class="subtitle" v-bind:class="theme">{{settings.message}}</h5>
   </div>
 </template>
 
@@ -17,6 +17,7 @@ import storage from '../../helpers/storage';    //  use this to access localStor
 const widget_name = 'example';                  //  make it same as file name for ease
 const manifest =    {
                       name: widget_name,
+                      description: 'Example widget',
                       settings: {
                         message: 'Hello world!',
                       },
@@ -43,9 +44,17 @@ export default {
   name: manifest.name,
   data: () => ({
     settings: storage.getSettings(manifest.name),
+    dark: storage.getSettings('mdash'),
   }),
   manifest: manifest, // REQUIRED
-//  computed: { },
+  computed: {
+    theme(){
+      return{
+        'has-text-white': this.dark,
+        'has-text-black': !this.dark,
+      }
+    }
+  },
 //  mounted() { },
 //  methods: { },
 //  watch: { },

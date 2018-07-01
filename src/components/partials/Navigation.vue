@@ -2,10 +2,10 @@
   <nav class="navbar is-transparent is-fixed-top" role="navigation" aria-label="main navigation">
     <div class="container">
       <div class="navbar-brand">
-        <a href="https://msociety.tech" class="navbar-item" @mouseover = "showLogo = false" @mouseleave = "showLogo = true">
+        <a href="https://msociety.tech" class="navbar-item" @mouseover = "showLogo = false" @mouseleave = "showLogo = true" v-bind:class="theme">
           <b>&mdash;</b>
           <transition name="slide-fade">
-            <span v-if="!showLogo">mdash</span>
+            <span v-if="!showLogo" class="has-text-weight-semibold" >mdash</span>
           </transition>
         </a>
         <!--hamburger menu-->
@@ -18,27 +18,27 @@
       <div class="navbar-menu">
         <div class="navbar-end">
           <a v-if="showEdit" class="navbar-item tooltip is-tooltip-bottom" data-tooltip="Edit dashboard" @click="handleEdit">
-            <span class="icon">
+            <span class="icon" v-bind:class="theme">
               <i class="fas fa-arrows-alt"></i>
             </span>
           </a>
           <a class="navbar-item" @click="handleSave" v-else>
-            <span class="icon">
-              <i class="fas fa-save"></i>
+            <span class="icon" v-bind:class="theme">
+              <i class="fas fa-save "></i>
             </span>
           </a>
           <a v-if="!showEdit" class="navbar-item" @click="handleEdit">
-            <span class="icon has-text-danger">
+            <span class="icon has-text-danger" v-bind:class="theme">
               <i class="fas fa-times"></i>
             </span>
           </a>
           <a class="navbar-item tooltip is-tooltip-bottom" data-tooltip="—mdash settings" @click="$emit('clicked', 'settings')">
-            <span class="icon">
+            <span class="icon" v-bind:class="theme">
               <i class="fas fa-cog"></i>
             </span>
           </a>
           <a class="navbar-item tooltip is-tooltip-bottom" data-tooltip="Add new widget" @click="$emit('clicked', 'widgetlist')">
-            <span class="icon">
+            <span class="icon" v-bind:class="theme">
               <i class="fas fa-plus"></i>
             </span>
           </a>
@@ -49,16 +49,27 @@
 </template>
 
 <script>
+import storage from '../../helpers/storage'
 
 export default {
   name: 'Navigation',
   data: () => ({
     showLogo: true,
     showEdit: true,
+    dark: storage.getSettings('mdash').dark,
   }),
-  computed: { },
+  computed: {
+    theme(){
+      return {
+       'has-text-white': this.dark,
+       'has-text-black': !this.dark,
+     }
+    }
+  },
   created() { },
-  mounted() { },
+  mounted() {
+    this.dark = storage.getSettings('mdash').dark;
+  },
   methods: {
     handleEdit(){
       this.$emit('clicked', 'editmode');

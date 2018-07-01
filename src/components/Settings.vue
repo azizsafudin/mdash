@@ -2,9 +2,9 @@
   <transition name="modal">
     <div class="modal-mask" @click="$emit('close')">
       <div class="modal-wrapper">
-        <div class="modal-container notification" @click.stop>
+        <div class="modal-container notification" v-bind:class="theme" @click.stop>
           <button class="delete" @click="$emit('close')"></button>
-          <p class="title">&mdash;{{msg.title}}</p>
+          <h3 class="title" v-bind:class="theme">&mdash;{{msg.title}}</h3>
         </div>
       </div>
     </div>
@@ -22,7 +22,18 @@ export default {
       title: 'settings',
     },
     settings: storage.get('mdash-settings'),
+    dark: storage.getSettings('mdash'),
   }),
+  computed:{
+    theme(){
+      return{
+        'has-text-white': this.dark,
+        'has-text-black': !this.dark,
+        'is-dark': this.dark,
+        'is-light': this.dark,
+      }
+    }
+  }
 };
 </script>
 
@@ -51,10 +62,11 @@ export default {
     max-height:90%;
     margin: 0px auto;
     padding: 20px 30px;
-    background-color: #fff;
-    /*border-radius: 10px;*/
     box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
     transition: all .3s ease;
+  }
+  .notification {
+    border-radius: 10px;
   }
 
   .modal-enter {

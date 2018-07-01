@@ -1,7 +1,7 @@
 <template>
   <div class="main">
-    <div class="clockface">{{timenow}}</div>
-    <span class="title">{{datenow}}</span>
+    <div class="clockface" v-bind:class="theme">{{timenow}}</div>
+    <span class="title" v-bind:class="theme">{{datenow}}</span>
   </div>
 </template>
 <script>
@@ -11,6 +11,7 @@ import storage from '../../helpers/storage';
 const widget_name = 'clock';
 const manifest =  {
                     name: widget_name,        //  Widget name
+                    description: 'Simple clock widget',
                     settings: {
                       show24h: false,
                       showSeconds: false,
@@ -29,6 +30,7 @@ export default {
   data: () => ({
     timenow: '',
     datenow: '',
+    dark: storage.getSettings('mdash').dark,
     settings: storage.getSettings(manifest.name),
   }),
   manifest: manifest,
@@ -39,6 +41,12 @@ export default {
       formatStr += this.settings.show24h ? '' : 'A';
       return formatStr;
     },
+    theme(){
+      return {
+        'has-text-white': this.dark,
+        'has-text-black': !this.dark,
+      };
+    }
   },
   mounted() {
     this.load();

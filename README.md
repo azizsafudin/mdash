@@ -20,7 +20,7 @@ npm run build
 # install in chrome by dragging and dropping the /dist folder in chrome://extensions
 ```
 ## Making your own widget
-Go to `src/components/widgets/` and make a `<your_widget_name>.vue` file. See `clock.vue` and `example.vue` for examples.
+Go to [src/components/widgets/](src/components/widgets/) and make a `<your_widget_name>.vue` file. See `clock.vue` and `example.vue` for examples.
 
 Your vue component needs to have a manifest parameter with the following structure:
 ```javascript
@@ -52,7 +52,7 @@ export default {
 }
 ```
 
-Open `src/components/widgets/index.js` and add your widget there.
+Open [src/components/widgets/index.js](src/components/widgets/index.js) and add your widget there.
 ```javascript
 //  src/components/widgets/index.js
 export { default as mywidget } from './mywidget.vue' //  Add your widget here.
@@ -73,6 +73,5 @@ Widget names have to be unique, check `widgets/index.js` to make sure yours is u
 - More widgets
     - Prayer time
     - Quotes
-    - Welcome message
     - To do list
     - Suggest more! (Make a github issue)

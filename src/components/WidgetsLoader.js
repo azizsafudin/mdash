@@ -9,7 +9,7 @@ let saved_layout = storage.get('mdash-layout');
 for (let key in components) {
   let obj = components[key];
   if (!obj.manifest)
-    console.log(`mdash: Missing manifest for ${obj.name ? obj.name : 'this'} widget.`);
+    console.error(`mdash: Missing manifest for ${obj.name ? obj.name : 'this'} widget.`);
   else if (obj.manifest.layout) {
     let item = _.find(saved_layout, function (o) {
       return o.i === obj.manifest.name

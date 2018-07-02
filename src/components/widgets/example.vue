@@ -4,8 +4,8 @@
 <!--https://vuejs.org/v2/guide/syntax.html-->
 <template>
   <div>
-    <h3 class="title" v-bind:class="theme">Example Widget</h3>
-    <h5 class="subtitle" v-bind:class="theme">{{settings.message}}</h5>
+    <h3 class="title unselectable" v-bind:class="theme">Example Widget</h3>
+    <h5 class="subtitle unselectable" v-bind:class="theme">{{settings.message}}</h5>
   </div>
 </template>
 

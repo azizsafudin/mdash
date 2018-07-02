@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div class="main unselectable">
     <div class="clockface" v-bind:class="theme">{{timenow}}</div>
     <span class="title" v-bind:class="theme">{{datenow}}</span>
   </div>

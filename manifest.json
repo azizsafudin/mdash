@@ -1,10 +1,11 @@
 {
   "name": "mdash",
-  "description": "A chrome extension made for msociety",
-  "version": "0.0.1",
+  "description": "A sleek customisable dashboard",
+  "version": "0.1.0",
   "manifest_version": 2,
   "permissions": ["management"],
   "chrome_url_overrides": {
     "newtab": "index.html"
   }
 }
+//Created by github.com/xmodulus

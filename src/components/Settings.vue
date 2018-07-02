@@ -64,6 +64,9 @@
                 </div>
               </div>
             </div>
+          <div>
+            <span class="is-size-7">Created by <a href="https://github.com/xmodulus">xmodulus</a></span>
+          </div>
           </div>
         </div>
       </div>

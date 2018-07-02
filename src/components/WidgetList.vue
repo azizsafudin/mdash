@@ -48,6 +48,12 @@
                     </button>
                   </td>
                 </tr>
+                <tr>
+                  <td colspan="3" class="is-size-7 is-centered">
+                    <p>More widgets coming soon!</p>
+                    <p>Or suggest features on <a href="https://github.com/xmodulus/mdash">Github</a></p>
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>

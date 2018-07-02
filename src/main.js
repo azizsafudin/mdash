@@ -31,6 +31,7 @@ let settings = storage.getSettings('mdash');
 if(settings !== null) settings = Object.assign({}, default_settings, settings);
 else settings = default_settings;
 storage.setSettings('mdash', settings);
+storage.set('installed-0.1.0', true);
 
 /* eslint-disable no-new */
 new Vue({

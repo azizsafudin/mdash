@@ -25,12 +25,24 @@ Go to [src/components/widgets/](src/components/widgets/) and make a `<your_widge
 Your vue component needs to have a manifest parameter with the following structure:
 ```javascript
 //  src/components/widgets/mywidget.vue
+const widget_name = 'mywidget';
 const manifest =  {
-                    name: 'mywidget',       //  widget name same as file name
+                    name: widget_name,       //  widget name same as file name
+                    description: 'My amazing widget',
                     settings: {             //  optional settings
+                      optionOne:{
+                        name: 'First option',
+                        value: true,
+                        type: 'boolean',
+                      },
+                      optionTwo:{
+                        name: 'The second choice',
+                        value: 'This is a string',
+                        type: 'string',
+                      }
                     },
                     layout: {               //  default layout
-                      i: 'mywidget',        //  Must be the same name as above
+                      i: widget_name,        //  Must be the same name as above
                       x: 3,
                       y: 1,
                       w: 6,
@@ -61,9 +73,9 @@ export { default as widget2 } from './widget2.vue'
 ...
 export { default as widgetN } from './widgetN.vue'
 //                    ^                   ^
-//all names here MUST be the same as the name in the manifest.
-//this means that widgets can only have one word names.
-//OR use underscores for spacing.
+//  All names here MUST be the same as the name in the manifest.
+//  This means that widgets can only have one word names.
+//  Use underscores for names with spaces.
 ```
 
 ## Helpers
@@ -72,16 +84,16 @@ export { default as widgetN } from './widgetN.vue'
 import storage from 'src/helpers/storage';
 
 //get dark mode flag from mdash settings.
-let dark_mode = storage.getSettings('mdash').dark;
+let dark_mode = storage.getSettings('mdash').dark.value;
 
-//get settings for your widget
+//get settings (defined above in manifest) for your widget
 let my_widget_settings = storage.getSettings('mywidget');
 
 //save changes to my widget's settings
 storage.setSettings('mywidget');
 ```
-Use `storage.getSettings(widget_name)` to access saved settings for your own widget. 
-Or `storage.getSettings('mdash')` for mdash settings.
+Use `storage.getSettings(widget_name).<setting>.value` to access saved settings for your own widget. 
+Or `storage.getSettings('mdash').<setting>.value` for mdash settings.
 
 For now you have to use `localStorage.clear()` every time you make a change to your widget's manifest for changes to take effect (basically resetting everything).
 

@@ -4,8 +4,8 @@
 <!--https://vuejs.org/v2/guide/syntax.html-->
 <template>
   <div>
-    <h3 class="title unselectable" v-bind:class="theme">Example Widget</h3>
-    <h5 class="subtitle unselectable" v-bind:class="theme">{{settings.message}}</h5>
+    <h3 class="is-size-5 is-unselectable" v-bind:class="theme">Example Widget</h3>
+    <h5 class="is-size-7 is-unselectable" v-bind:class="theme">Hello World!</h5>
   </div>
 </template>
 
@@ -18,9 +18,9 @@ const widget_name = 'example';                  //  make it same as file name fo
 const manifest =    {
                       name: widget_name,
                       description: 'Example widget',
-                      settings: {
-                        message: 'Hello world!',
-                      },
+//                      settings: {
+//                        message: 'Hello world!',            //  Items in here will appear in the settings page. Use normal storage otherwise.
+//                      },
                       layout: {                             //  this is the layout settings for vue-grid-layout (Not part of vue VM, just passing data)
                         /*  ---- Required parameters ---- */
                         i: widget_name,
@@ -43,7 +43,7 @@ const manifest =    {
 export default {
   name: manifest.name,
   data: () => ({
-    settings: storage.getSettings(manifest.name),
+//    settings: storage.getSettings(manifest.name),
     dark: storage.getSettings('mdash'),
   }),
   manifest: manifest, // REQUIRED

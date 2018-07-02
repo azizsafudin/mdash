@@ -1,5 +1,5 @@
 <template>
-  <div class="main unselectable">
+  <div class="main is-unselectable">
     <div class="clockface" v-bind:class="theme">{{clock.time}}<span class="small">{{clock.seconds}}</span>
       <span class="small">{{clock.label}}</span>
     </div>

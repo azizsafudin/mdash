@@ -2,7 +2,7 @@
 <template>
   <div>
     <div v-if="!isNameSet" class="main">
-      <h3 class="title has-text-centered unselectable" v-bind:class="theme">{{msg.first_greeting}}</h3>
+      <h3 class="title has-text-centered is-unselectable" v-bind:class="theme">{{msg.first_greeting}}</h3>
       <input
         v-model="newName" class="input myinput is-medium has-text-centered"
         type="text"
@@ -11,7 +11,7 @@
       >
     </div>
     <div v-else>
-      <h5 class="title has-text-centered unselectable" v-if="!editMode" v-bind:class="theme">
+      <h5 class="title has-text-centered is-unselectable" v-if="!editMode" v-bind:class="theme">
         {{greeting}} <span v-on:dblclick="editMode = true;" class="name">{{name}}</span>.
       </h5>
       <input
@@ -34,23 +34,19 @@ const widget_name = 'welcome';                  //  make it same as file name fo
 const manifest =    {
                       name: widget_name,
                       description: 'Welcome message widget',
-                      settings: {
-                        name: '',
-                      },
-                      layout: {                             //  this is the layout settings for vue-grid-layout (Not part of vue VM, just passing data)
-                        /*  ---- Required parameters ---- */
+                      layout: {
                         i: widget_name,
-                        x: 8,                               //  x position on load (starts at 0)
-                        y: 7,                               //  y postion on load (starts at 0)
-                        w: 8,                               //  how many columns wide is the widget
-                        h: 1,                               //  how many rows tall is the widget
+                        x: 8,
+                        y: 7,
+                        w: 8,
+                        h: 1,
                       }
                     };
 export default {
   name: manifest.name,
   data: () => ({
-    name: storage.getSettings(manifest.name).name,
-    newName: storage.getSettings(manifest.name).name,
+    name: storage.get(manifest.name),
+    newName: storage.get(manifest.name),
     dark: storage.getSettings('mdash').dark,
     editMode: false,
     msg: {
@@ -60,18 +56,18 @@ export default {
   manifest: manifest, // REQUIRED
   methods:{
     submit(){
-      storage.setSettings(manifest.name, {name: this.newName});
+      storage.set(manifest.name, this.newName);
       this.name = this.newName;
       this.editMode = false;
     },
     getGreetingTime (m) {
-      var g = null; //return g
+      let g = null; //return g
 
       if(!m || !m.isValid()) { return; } //if we can't find a valid or filled moment, we return.
 
-      var split_afternoon = 12 //24hr time to split the afternoon
-      var split_evening = 17 //24hr time to split the evening
-      var currentHour = parseFloat(m.format("HH"));
+      let split_afternoon = 12 //24hr time to split the afternoon
+      let split_evening = 17 //24hr time to split the evening
+      let currentHour = parseFloat(m.format("HH"));
 
       if(currentHour >= split_afternoon && currentHour <= split_evening) {
         g = "afternoon";
@@ -88,7 +84,7 @@ export default {
       return 'Good ' + this.getGreetingTime(moment()) +',';
     },
     isNameSet() {
-      return this.name.length > 0;
+      return this.name === null ? null: this.name.length > 0;
     },
     theme(){
       return {

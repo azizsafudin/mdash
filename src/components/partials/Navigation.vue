@@ -3,9 +3,9 @@
     <div class="container">
       <div class="navbar-brand">
         <a href="https://msociety.tech" class="navbar-item" @mouseover = "showLogo = false" @mouseleave = "showLogo = true" v-bind:class="theme">
-          <b>&mdash;</b>
+          <p class="is-size-5">&mdash;</p>
           <transition name="slide-fade">
-            <span v-if="!showLogo" class="has-text-weight-semibold" >mdash</span>
+            <span v-if="!showLogo" class=" is-size-5" >mdash</span>
           </transition>
         </a>
         <!--hamburger menu-->

@@ -1,5 +1,5 @@
 <template>
-  <div class="main unselectable">
+  <div class="main is-unselectable">
     <span class="title" v-bind:class="theme">{{date}}</span>
   </div>
 </template>

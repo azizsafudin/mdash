@@ -56,7 +56,7 @@ export default {
   data: () => ({
     showLogo: true,
     showEdit: true,
-    dark: storage.getSettings('mdash').dark,
+    dark: storage.getSettings('mdash').dark.value,
   }),
   computed: {
     theme(){
@@ -65,10 +65,6 @@ export default {
        'has-text-black': !this.dark,
      }
     }
-  },
-  created() { },
-  mounted() {
-    this.dark = storage.getSettings('mdash').dark;
   },
   methods: {
     handleEdit(){

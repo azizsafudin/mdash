@@ -62,7 +62,7 @@ export default {
       isMirrored: false,
       verticalCompact: false,
     },
-    layout: [],
+    layout: widgets.layout,
   }),
   methods: {
     toggleEditMode(save = false) {
@@ -77,13 +77,6 @@ export default {
       this.showWidgetList = (item === 'widgetlist');
       if(item === 'editmode') this.toggleEditMode();
       if(item === 'saved') this.toggleEditMode(true);
-    },
-    setLayout(){
-      this.layout = widgets.layout;
-//      if(storage.getLayout().length === 0){
-//        this.addWidget('clock');
-//        this.addWidget('example');
-//      }
     },
     addWidget(name){
       let widget = components[name];
@@ -102,7 +95,6 @@ export default {
       storage.setLayout(layout);
     },
     load() {
-      this.setLayout();
       this.showSettings = false;
     },
   },

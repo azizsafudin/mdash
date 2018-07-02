@@ -13,7 +13,11 @@ const manifest =  {
                     name: widget_name,        //  Widget name
                     description: 'Simple date widget',
                     settings: {
-                      format: 'dddd, Do MMMM YYYY',
+                      format: {
+                        name: 'Date format',
+                        value: 'dddd, Do MMMM YYYY',
+                        type: 'string'
+                      },
                     },
                     layout: {             //  default layout
                       i: widget_name,         //  Must be the same name
@@ -28,7 +32,7 @@ export default {
   name: manifest.name,
   data: () => ({
     date: '',
-    dark: storage.getSettings('mdash').dark,
+    dark: storage.getSettings('mdash').dark.value,
     settings: storage.getSettings(manifest.name),
   }),
   manifest: manifest,
@@ -49,7 +53,7 @@ export default {
   },
   methods: {
     getDate() {
-      this.date = moment().format(this.settings.format);
+      this.date = moment().format(this.settings.format.value);
     },
   },
 };

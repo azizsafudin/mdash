@@ -44,7 +44,7 @@ export default {
   name: manifest.name,
   data: () => ({
 //    settings: storage.getSettings(manifest.name),
-    dark: storage.getSettings('mdash'),
+    dark: storage.getSettings('mdash').dark.value,
   }),
   manifest: manifest, // REQUIRED
   computed: {

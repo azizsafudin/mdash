@@ -68,7 +68,7 @@ export default {
     },
     search: '',
     layout: storage.getLayout(),
-    dark: storage.getSettings('mdash').dark,
+    dark: storage.getSettings('mdash').dark.value,
     list: widgets.list,
   }),
   computed:{

@@ -5,7 +5,16 @@ import storage from './helpers/storage'
 Vue.config.productionTip = false;
 
 const default_settings = {
-  dark: true,
+  dark: {
+    name: 'Dark mode',
+    value: true,
+    type: 'boolean',
+  },
+  setDefault: {
+    name: 'Always set default widgets when dash is empty',
+    value: true,
+    type: 'boolean',
+  },
 };
 
 //set default mdash settings

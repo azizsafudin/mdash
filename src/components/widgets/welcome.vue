@@ -47,7 +47,7 @@ export default {
   data: () => ({
     name: storage.get(manifest.name),
     newName: storage.get(manifest.name),
-    dark: storage.getSettings('mdash').dark,
+    dark: storage.getSettings('mdash').dark.value,
     editMode: false,
     msg: {
       first_greeting: 'Hello there, what\'s your name?',

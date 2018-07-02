@@ -14,8 +14,16 @@ const manifest =  {
                     name: widget_name,        //  Widget name
                     description: 'Simple clock widget',
                     settings: {
-                      show24h: true,
-                      showSeconds: false,
+                      show24h: {
+                        name: 'Show 24 hours',
+                        value: true,
+                        type: 'boolean',
+                      },
+                      showSeconds: {
+                        name: 'Show seconds',
+                        value: false,
+                        type: 'boolean',
+                      },
                     },
                     layout: {             //  default layout
                       i: widget_name,         //  Must be the same name
@@ -34,7 +42,7 @@ export default {
       seconds: '',
       label: '',
     },
-    dark: storage.getSettings('mdash').dark,
+    dark: storage.getSettings('mdash').dark.value,
     settings: storage.getSettings(manifest.name),
   }),
   manifest: manifest,
@@ -49,19 +57,19 @@ export default {
   mounted() {
     this.load();
     setInterval(this.getTime, 60000); //  update time every minute.
-    if(this.settings.showSeconds) setInterval(this.getSeconds, 1000); //  update seconds every second.
+    if(this.settings.showSeconds.value) setInterval(this.getSeconds, 1000); //  update seconds every second.
   },
   methods: {
     getTime() {
-      let format = this.settings.show24h ? 'H:mm' : 'h:mm';
+      let format = this.settings.show24h.value ? 'H:mm' : 'h:mm';
       this.clock.time = moment().format(format);
       this.getLabel();
     },
     getSeconds(){
-      if(this.settings.showSeconds)this.clock.seconds = moment().format(':ss');
+      if(this.settings.showSeconds.value)this.clock.seconds = moment().format(':ss');
     },
     getLabel() {
-      if(!this.settings.show24h)this.clock.label = moment().format('A');
+      if(!this.settings.show24h.value)this.clock.label = moment().format('A');
     },
     load() {
       this.getTime();

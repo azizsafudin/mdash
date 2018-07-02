@@ -4,10 +4,56 @@
       <div class="modal-wrapper">
         <div class="modal-container notification" v-bind:class="theme" @click.stop>
           <button class="delete" @click="$emit('close')"></button>
-          <h3 class="title" v-bind:class="theme">&mdash;{{msg.title}}</h3>
+          <h3 class="is-size-5" v-bind:class="theme">&mdash;{{msg.title}}</h3>
+          <div class="columns">
+            <div class="column is-2">
+              <button class="button" @click="saveSettings">Save</button>
+              <!--<p class="control has-icons-right">-->
+                <!--<input class="input is-small is-rounded" type="text" v-model="search">-->
+                <!--<span class="icon is-small is-right">-->
+                    <!--<i class="fas fa-search"></i>-->
+                  <!--</span>-->
+              <!--</p>-->
+            </div>
+            <div class="column scrollbox">
+              <div class="box" v-for="(setting, key) in settings">
+                <span class="is-capitalized subtitle">{{key}}</span>
+                <div class="field is-horizontal" v-for="(item, key) in setting">
+                  <!--for booleans-->
+                  <div class="control" v-if="setting[key].type === 'boolean'">
+                    <input
+                      v-model="setting[key].value"
+                      :id="key"
+                      type="checkbox"
+                      :name="key"
+                      class="switch is-rounded is-rtl"
+                      :checked="item"
+                    >
+                    <label :for="key">{{item.name}}</label>
+                  </div>
+
+                  <!--for strings-->
+                  <!--<div class="field-label" v-if="setting[key].type === 'string'">-->
+                    <!--<label>{{item.name}}</label>-->
+                  <!--</div>-->
+                  <!--<div class="control" v-if="setting[key].type === 'string'">-->
+                    <!--<input-->
+                      <!--v-model="setting[key].value"-->
+                      <!--:id="key"-->
+                      <!--type="text"-->
+                      <!--:name="key"-->
+                      <!--class="input is-rounded"-->
+                      <!--:checked="item"-->
+                    <!--&gt;-->
+                  <!--</div>-->
+
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
   </transition>
 </template>
 
@@ -22,8 +68,14 @@ export default {
       title: 'settings',
     },
     settings: storage.get('mdash-settings'),
-    dark: storage.getSettings('mdash'),
+    dark: storage.getSettings('mdash').dark.value,
   }),
+  methods:{
+    saveSettings(){
+      storage.set('mdash-settings', this.settings);
+      location.reload();
+    }
+  },
   computed:{
     theme(){
       return{
@@ -32,7 +84,7 @@ export default {
         'is-dark': this.dark,
         'is-light': this.dark,
       }
-    }
+    },
   }
 };
 </script>
@@ -65,10 +117,15 @@ export default {
     box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
     transition: all .3s ease;
   }
+
   .notification {
     border-radius: 10px;
   }
-
+  .scrollbox {
+    width: 100%;
+    height: 400px;
+    overflow: auto;
+  }
   .modal-enter {
     opacity: 0;
   }

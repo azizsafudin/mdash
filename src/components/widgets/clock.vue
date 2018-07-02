@@ -1,7 +1,8 @@
 <template>
   <div class="main unselectable">
-    <div class="clockface" v-bind:class="theme">{{timenow}}</div>
-    <span class="title" v-bind:class="theme">{{datenow}}</span>
+    <div class="clockface" v-bind:class="theme">{{clock.time}}<span class="small">{{clock.seconds}}</span>
+      <span class="small">{{clock.label}}</span>
+    </div>
   </div>
 </template>
 <script>
@@ -13,34 +14,31 @@ const manifest =  {
                     name: widget_name,        //  Widget name
                     description: 'Simple clock widget',
                     settings: {
-                      show24h: false,
+                      show24h: true,
                       showSeconds: false,
                     },
                     layout: {             //  default layout
                       i: widget_name,         //  Must be the same name
-                      x: 7,
+                      x: 8,
                       y: 2,
-                      w: 10,
-                      h: 5,
+                      w: 8,
+                      h: 4,
                     },
                   };
 
 export default {
   name: manifest.name,
   data: () => ({
-    timenow: '',
-    datenow: '',
+    clock: {
+      time: '',
+      seconds: '',
+      label: '',
+    },
     dark: storage.getSettings('mdash').dark,
     settings: storage.getSettings(manifest.name),
   }),
   manifest: manifest,
   computed: {
-    format() {
-      let formatStr = this.settings.show24h ? 'H:mm' : 'h:mm';
-      formatStr += this.settings.showSeconds ? ':ss' : '';
-      formatStr += this.settings.show24h ? '' : 'A';
-      return formatStr;
-    },
     theme(){
       return {
         'has-text-white': this.dark,
@@ -50,18 +48,24 @@ export default {
   },
   mounted() {
     this.load();
-    setInterval(this.getTime, 1000); //  update time every second.
+    setInterval(this.getTime, 60000); //  update time every minute.
+    if(this.settings.showSeconds) setInterval(this.getSeconds, 1000); //  update seconds every second.
   },
   methods: {
     getTime() {
-      this.timenow = moment().format(this.format);
+      let format = this.settings.show24h ? 'H:mm' : 'h:mm';
+      this.clock.time = moment().format(format);
+      this.getLabel();
     },
-    getDate() {
-      this.datenow = moment().format('dddd, Do MMMM YYYY');
+    getSeconds(){
+      if(this.settings.showSeconds)this.clock.seconds = moment().format(':ss');
+    },
+    getLabel() {
+      if(!this.settings.show24h)this.clock.label = moment().format('A');
     },
     load() {
       this.getTime();
-      this.getDate();
+      this.getSeconds();
     },
   },
 };
@@ -70,10 +74,12 @@ export default {
 <style scoped>
   .main {
     text-align: center;
-    /*border: solid black 2px;*/
-    /*height:300px;*/
+    font-family: 'Lato', sans-serif;
   }
   .clockface {
-    font-size: 10vw;
+    font-size: 10rem;
+  }
+  .clockface .small {
+    font-size: 5rem;
   }
 </style>

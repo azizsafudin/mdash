@@ -1,7 +1,7 @@
 
 <template>
   <div>
-    <div v-if="!isNameSet">
+    <div v-if="!isNameSet" class="main">
       <h3 class="title has-text-centered unselectable" v-bind:class="theme">{{msg.first_greeting}}</h3>
       <input
         v-model="newName" class="input myinput is-medium has-text-centered"
@@ -41,7 +41,7 @@ const manifest =    {
                         /*  ---- Required parameters ---- */
                         i: widget_name,
                         x: 8,                               //  x position on load (starts at 0)
-                        y: 6,                               //  y postion on load (starts at 0)
+                        y: 7,                               //  y postion on load (starts at 0)
                         w: 8,                               //  how many columns wide is the widget
                         h: 1,                               //  how many rows tall is the widget
                       }
@@ -104,17 +104,20 @@ export default {
 
 <style scoped>
   /*Bulma.io classes are available*/
+  .title{
+    font-family: 'Lato', sans-serif;
+  }
   .myinput {
     background: transparent;
     border: none;
     box-shadow: none;
-    border-bottom: rgba(0,0,0,0.2) solid 1px;
+    border-bottom: rgba(0,0,0,0.2) solid 2px;
   }
   .myinput.dark {
-    border-bottom: rgba(255,255,255,0.2) solid 1px;
+    border-bottom: rgba(255,255,255,0.2) solid 2px;
   }
   .myinput.active{
-    border-bottom: rgba(0,0,0,0.7) solid 1px;
+    border-bottom: rgba(0,0,0,0.7) solid 2px;
   }
   .name{
     cursor: pointer;

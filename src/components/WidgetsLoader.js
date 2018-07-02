@@ -27,6 +27,7 @@ for (let key in components) {
 
 if(saved_layout === null || saved_layout.length === 0) {
   layout.push(components.clock.manifest.layout);
+  layout.push(components.date.manifest.layout);
   layout.push(components.welcome.manifest.layout);
 }
 storage.set('mdash-layout', layout);

@@ -13,10 +13,17 @@
 
 @import "../../../node_modules/bulma-extensions/dist/css/bulma-extensions.min.css";
 
-@import url('https://fonts.googleapis.com/css?family=Lato|Convergence');
+/* latin */
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/static/fonts/lato.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 
-.navbar{
-  font-family: 'Convergence', sans-serif;
+span, p, a, label {
+  font-family: 'Lato', sans-serif;
 }
 
 .is-transparent {
@@ -24,8 +31,9 @@
 }
 
 html {
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center;
-  background-image: url('/static/img/background-2.jpg');
+  background: url('/static/img/background-2.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }

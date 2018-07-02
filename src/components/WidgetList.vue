@@ -21,34 +21,36 @@
             </div>
           </div>
           <!--<button class="delete" @click="$emit('close')"></button>-->
-          <table class="table is-dark is-narrow is-fullwidth">
-            <tbody>
-              <tr v-for="widget in filteredList" class="scrollbox">
-                <td class="is-capitalized">{{widget.name}}</td>
-                <td class="is-size-7">{{widget.description}}</td>
-                <td>
-                  <button
-                    class="button is-primary is-pulled-right"
-                    @click="handleClick('add', widget.name)"
-                    v-if="!isAdded(widget.name)"
-                  >
-                    <span class="icon">
-                      <i class="fas fa-plus"></i>
-                    </span>
-                  </button>
-                  <button
-                    class="button is-danger is-pulled-right"
-                    @click="handleClick('remove', widget.name)"
-                    v-else
-                  >
-                    <span class="icon">
-                      <i class="fas fa-times"></i>
-                    </span>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="scrollbox">
+            <table class="table is-dark is-narrow is-fullwidth">
+              <tbody>
+                <tr v-for="widget in filteredList">
+                  <td class="is-capitalized">{{widget.name | underscore-space}}</td>
+                  <td class="is-size-7">{{widget.description}}</td>
+                  <td>
+                    <button
+                      class="button is-primary is-pulled-right"
+                      @click="handleClick('add', widget.name)"
+                      v-if="!isAdded(widget.name)"
+                    >
+                      <span class="icon">
+                        <i class="fas fa-plus"></i>
+                      </span>
+                    </button>
+                    <button
+                      class="button is-danger is-pulled-right"
+                      @click="handleClick('remove', widget.name)"
+                      v-else
+                    >
+                      <span class="icon">
+                        <i class="fas fa-times"></i>
+                      </span>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
@@ -136,7 +138,11 @@ export default {
   .table{
     border-radius: 5px;
   }
-
+  .scrollbox {
+    width: 100%;
+    height: 35rem;
+    overflow: auto;
+  }
   .modal-enter {
     opacity: 0;
   }

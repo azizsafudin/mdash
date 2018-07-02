@@ -60,6 +60,10 @@ export { default as widget1 } from './widget1.vue'
 export { default as widget2 } from './widget2.vue'
 ...
 export { default as widgetN } from './widgetN.vue'
+//                    ^                   ^
+//all names here MUST be the same as the name in the manifest.
+//this means that widgets can only have one word names.
+//OR use underscores for spacing.
 ```
 
 ## Helpers
@@ -84,9 +88,7 @@ For now you have to use `localStorage.clear()` every time you make a change to y
 Widget names have to be unique, check `widgets/index.js` to make sure yours is unique, if not one will override the other.
 
 ## To do
-- Widget settings UI
-    - Basic structure implemented in WidgetLoader
-    - Allow users to set preferences for each widget in the UI
+- Add a way to select background image
 - More widgets
     - Prayer time
     - Quotes

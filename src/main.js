@@ -11,11 +11,20 @@ const default_settings = {
     type: 'boolean',
   },
   setDefault: {
-    name: 'Always set default widgets when dash is empty',
+    name: 'Set default widgets',
     value: true,
     type: 'boolean',
   },
 };
+
+Vue.filter('truncate', function (string, value) {
+  if (string && string.length > value - 3) return string.substring(0, value) + '...';
+  else return string;
+});
+
+Vue.filter('underscore-space', function (string) {
+    return string.replace(/_/g, ' ');
+});
 
 //set default mdash settings
 let settings = storage.getSettings('mdash');

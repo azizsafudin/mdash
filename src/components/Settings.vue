@@ -4,49 +4,62 @@
       <div class="modal-wrapper">
         <div class="modal-container notification" v-bind:class="theme" @click.stop>
           <button class="delete" @click="$emit('close')"></button>
-          <h3 class="is-size-5" v-bind:class="theme">&mdash;{{msg.title}}</h3>
+          <div class="level">
+            <div class="level-left">
+              <h3 class="level-item is-size-5" v-bind:class="theme">&mdash;{{msg.title}}</h3>
+            </div>
+            <div class="level-right">
+              <a class="button" v-bind:class="theme" @click="saveSettings">
+                <span class="icon" v-bind:class="theme">
+                  <i class="fas fa-save"></i>
+                </span>
+                <span>Save</span>
+              </a>
+            </div>
+          </div>
           <div class="columns">
             <div class="column is-2">
-              <button class="button" @click="saveSettings">Save</button>
-              <!--<p class="control has-icons-right">-->
-                <!--<input class="input is-small is-rounded" type="text" v-model="search">-->
-                <!--<span class="icon is-small is-right">-->
-                    <!--<i class="fas fa-search"></i>-->
-                  <!--</span>-->
-              <!--</p>-->
             </div>
-            <div class="column scrollbox">
-              <div class="box" v-for="(setting, key) in settings">
-                <span class="is-capitalized subtitle">{{key}}</span>
+            <div class="column scrollbox" >
+              <div class="message" v-for="(setting, key) in settings">
+                <div class="message-header">
+                  <span class="is-capitalized is-size-5">{{key | underscore-space}}</span>
+                </div>
+                <div class="message-body">
                 <div class="field is-horizontal" v-for="(item, key) in setting">
+                  <div class="field-label is-normal">
+                    <label class="label">{{item.name}}</label>
+                  </div>
                   <!--for booleans-->
-                  <div class="control" v-if="setting[key].type === 'boolean'">
-                    <input
-                      v-model="setting[key].value"
-                      :id="key"
-                      type="checkbox"
-                      :name="key"
-                      class="switch is-rounded is-rtl"
-                      :checked="item"
-                    >
-                    <label :for="key">{{item.name}}</label>
+                  <div class="field-body" v-if="setting[key].type === 'boolean'">
+                    <div class="field">
+                      <div class="control">
+                        <input
+                          v-model="setting[key].value"
+                          :id="key"
+                          type="checkbox"
+                          :name="key"
+                          class="checkbox switch is-rounded is-rtl"
+                        >
+                        <label class="label" :for="key"></label>
+                      </div>
+                    </div>
                   </div>
 
                   <!--for strings-->
-                  <!--<div class="field-label" v-if="setting[key].type === 'string'">-->
-                    <!--<label>{{item.name}}</label>-->
-                  <!--</div>-->
-                  <!--<div class="control" v-if="setting[key].type === 'string'">-->
-                    <!--<input-->
-                      <!--v-model="setting[key].value"-->
-                      <!--:id="key"-->
-                      <!--type="text"-->
-                      <!--:name="key"-->
-                      <!--class="input is-rounded"-->
-                      <!--:checked="item"-->
-                    <!--&gt;-->
-                  <!--</div>-->
-
+                  <div class="field-body" v-if="setting[key].type === 'string'">
+                    <div class="field">
+                      <div class="control">
+                        <input
+                          v-model="setting[key].value"
+                          type="text"
+                          class="input is-rounded"
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                  <!--Implement other types of settings here-->
                 </div>
                 </div>
               </div>
@@ -82,7 +95,7 @@ export default {
         'has-text-white': this.dark,
         'has-text-black': !this.dark,
         'is-dark': this.dark,
-        'is-light': this.dark,
+        'is-light': !this.dark,
       }
     },
   }
@@ -123,7 +136,7 @@ export default {
   }
   .scrollbox {
     width: 100%;
-    height: 400px;
+    height: 35rem;
     overflow: auto;
   }
   .modal-enter {

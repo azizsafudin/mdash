@@ -2,7 +2,7 @@
   <nav class="navbar is-transparent is-fixed-top" role="navigation" aria-label="main navigation">
     <div class="container">
       <div class="navbar-brand">
-        <a href="https://msociety.tech" class="navbar-item" @mouseover = "showLogo = false" @mouseleave = "showLogo = true" v-bind:class="theme">
+        <a href="http://msociety.tech" class="navbar-item" @mouseover = "showLogo = false" @mouseleave = "showLogo = true" v-bind:class="theme">
           <p class="is-size-5">&mdash;</p>
           <transition name="slide-fade">
             <span v-if="!showLogo" class=" is-size-5" >mdash</span>
@@ -79,7 +79,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
   .icon {
     font-size: 0.75em;
   }

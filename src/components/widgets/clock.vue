@@ -27,9 +27,9 @@ const manifest =  {
                     },
                     layout: {             //  default layout
                       i: widget_name,         //  Must be the same name
-                      x: 8,
+                      x: 6,
                       y: 2,
-                      w: 8,
+                      w: 12,
                       h: 4,
                     },
                   };

@@ -25,7 +25,7 @@ for (let key in components) {
   widget_list.push(obj.manifest);
 }
 
-if(saved_layout === null || saved_layout.length === 0) {
+if(saved_layout === null || saved_layout.length === 0 && storage.getSettings('mdash').setDefault.value) {
   layout.push(components.clock.manifest.layout);
   layout.push(components.date.manifest.layout);
   layout.push(components.welcome.manifest.layout);

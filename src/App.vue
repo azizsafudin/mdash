@@ -15,14 +15,24 @@ export default {
     Home,
   },
   data: () => ({
+    settings: storage.getSettings('mdash'),
     background: storage.get('mdash-background'),
   }),
   computed: { },
   created() { },
   mounted() {
-    let date = moment().format('dddd, Do MMMM YYYY');
-    let index = this.mod(this.hash(date), this.background.length);
-    document.body.style.backgroundImage = 'url("'+this.background[index].filename+ '")';
+    if(!this.settings.showImage.value){
+      document.body.style.backgroundColor = this.settings.bgColour.value;
+    }
+    else if(this.settings.randomBg.value) {
+      let date = moment().format('dddd, Do MMMM YYYY');
+      let index = this.mod(this.hash(date), this.background.length);
+      document.body.style.backgroundImage = 'url("' + this.background[index].filename + '")';
+    }
+    else{
+      document.body.style.backgroundImage = url('/static/images/background-8.jpg');
+    }
+
   },
   methods: {
     hash(string){
@@ -45,7 +55,7 @@ export default {
 <style lang="scss">
   @import 'assets/css/global.scss';
   body {
-    background: url('/static/images/background-8.jpg')no-repeat center center fixed;
+    background: no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;

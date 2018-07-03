@@ -9,7 +9,7 @@
               <h3 class="level-item is-size-5" v-bind:class="theme">&mdash;{{msg.title}}</h3>
             </div>
             <div class="level-right">
-              <a class="button" v-bind:class="theme" @click="saveSettings">
+              <a class="level-item button" v-bind:class="theme" @click="saveSettings">
                 <span class="icon" v-bind:class="theme">
                   <i class="fas fa-save"></i>
                 </span>
@@ -19,53 +19,66 @@
           </div>
           <div class="columns">
             <div class="column is-2">
+              <span class="is-size-7" id="credit">mdash by <a href="https://github.com/xmodulus">modulus</a></span>
             </div>
-            <div class="column scrollbox" >
-              <div class="message" v-for="(setting, key) in settings">
-                <div class="message-header">
-                  <span class="is-capitalized is-size-5">{{key | underscore-space}}</span>
-                </div>
-                <div class="message-body">
-                <div class="field is-horizontal" v-for="(item, key) in setting">
-                  <div class="field-label is-normal">
-                    <label class="label">{{item.name}}</label>
-                  </div>
-                  <!--for booleans-->
-                  <div class="field-body" v-if="setting[key].type === 'boolean'">
-                    <div class="field">
-                      <div class="control">
-                        <input
-                          v-model="setting[key].value"
-                          :id="key"
-                          type="checkbox"
-                          :name="key"
-                          class="checkbox switch is-rounded is-rtl"
-                        >
-                        <label class="label" :for="key"></label>
-                      </div>
+            <div class="column">
+              <div class="tabs is-boxed">
+                <ul>
+                  <li :class="{'is-active':activeTab=='general'}" @click="showTab('general')"><a>General</a></li>
+                  <li :class="{'is-active':activeTab=='photos'}" @click="showTab('photos')"><a>Photos</a></li>
+                </ul>
+              </div>
+              <div class="scrollbox" v-if="activeTab == 'general'">
+                <div class="scrollbox-child">
+                  <div class="message" v-for="(setting, key) in settings">
+                    <div class="message-header">
+                      <span class="is-capitalized is-size-5">{{key | underscore-space}}</span>
                     </div>
-                  </div>
+                    <div class="message-body">
+                    <div class="field is-horizontal" v-for="(item, key) in setting">
+                      <div class="field-label is-normal">
+                        <label v-if="item.tooltip" class="label tooltip is-tooltip-right" :data-tooltip="item.tooltip">{{item.name}}</label>
+                        <label class="label" v-else>{{item.name}}</label>
+                      </div>
+                      <!--for booleans-->
+                      <div class="field-body" v-if="setting[key].type === 'boolean'">
+                        <div class="field">
+                          <div class="control">
+                            <input
+                              v-model="setting[key].value"
+                              :id="key"
+                              type="checkbox"
+                              :name="key"
+                              class="checkbox switch is-rounded is-rtl"
+                            >
+                            <label class="label" :for="key"></label>
+                          </div>
+                        </div>
+                      </div>
 
-                  <!--for strings-->
-                  <div class="field-body" v-if="setting[key].type === 'string'">
-                    <div class="field">
-                      <div class="control">
-                        <input
-                          v-model="setting[key].value"
-                          type="text"
-                          class="input is-rounded"
-                        >
+                      <!--for strings-->
+                      <div class="field-body" v-if="setting[key].type === 'string'">
+                        <div class="field">
+                          <div class="control">
+                            <input
+                              v-model="setting[key].value"
+                              type="text"
+                              class="input is-rounded"
+                            >
+                          </div>
+                        </div>
                       </div>
                     </div>
+                      <!--Implement other types of settings here-->
+                    </div>
                   </div>
-                </div>
-                  <!--Implement other types of settings here-->
-                </div>
                 </div>
               </div>
+              <!--Photos tab-->
+              <div class="scrollbox" v-if="activeTab == 'photos'">
+                <h3>PHOTOS</h3>
+              </div>
             </div>
-          <div>
-            <span class="is-size-7">Created by <a href="https://github.com/xmodulus">xmodulus</a></span>
           </div>
           </div>
         </div>
@@ -85,8 +98,12 @@ export default {
     },
     settings: storage.get('mdash-settings'),
     dark: storage.getSettings('mdash').dark.value,
+    activeTab: 'general',
   }),
   methods:{
+    showTab(tabName){
+      this.activeTab = tabName;
+    },
     saveSettings(){
       storage.set('mdash-settings', this.settings);
       location.reload();
@@ -137,10 +154,28 @@ export default {
   .notification {
     border-radius: 10px;
   }
+  .notification a {
+    text-decoration: none;
+  }
   .scrollbox {
     width: 100%;
-    height: 35rem;
-    overflow: auto;
+    height: 25rem;
+    /*padding-right: 2em;*/
+    position: relative;
+    overflow: hidden;
+  }
+  .scrollbox-child {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: -17px; /* Increase/Decrease this value for cross-browser compatibility */
+    overflow-y: scroll;
+  }
+  #credit {
+    position: absolute;
+    bottom: 2em;
+    left: 2em;
   }
   .modal-enter {
     opacity: 0;

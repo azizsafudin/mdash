@@ -6,9 +6,7 @@
 @import "../../../node_modules/bulma/sass/utilities/derived-variables.sass";
 
 //add custom css here.
-//$notification-radius: 10px;
-
-
+$tabs-link-active-color: $dark;
 @import "../../../node_modules/bulma/bulma.sass";
 
 @import "../../../node_modules/bulma-extensions/dist/css/bulma-extensions.min.css";

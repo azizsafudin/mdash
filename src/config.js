@@ -1,5 +1,17 @@
 module.exports = {
   default_settings : {
+    showImage: {
+      name: 'Show photo',
+      value: true,
+      tooltip: 'Show plain colour instead of random photos.',
+      type: 'boolean',
+    },
+    randomBg: {
+      name: 'Random photo',
+      value: true,
+      tooltip: 'Show a random photo everyday',
+      type: 'boolean',
+    },
     dark: {
       name: 'Dark mode',
       value: true,
@@ -8,7 +20,14 @@ module.exports = {
     setDefault: {
       name: 'Set default widgets',
       value: true,
+      tooltip: 'Sets default widgets when dashboard is empty.',
       type: 'boolean',
+    },
+    bgColour: {
+      name: 'Background colour',
+      value: '#004080',
+      tooltip: 'Any CSS-friendly color',
+      type: 'string',
     },
   },
   default_bg : [

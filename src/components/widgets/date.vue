@@ -16,14 +16,15 @@ const manifest =  {
                       format: {
                         name: 'Date format',
                         value: 'dddd, Do MMMM YYYY',
+                        tooltip: 'More info: momentjs.com',
                         type: 'string'
                       },
                     },
                     layout: {             //  default layout
                       i: widget_name,         //  Must be the same name
-                      x: 9,
+                      x: 8,
                       y: 7,
-                      w: 6,
+                      w: 8,
                       h: 1,
                     },
                   };

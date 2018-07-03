@@ -27,10 +27,10 @@ const manifest =  {
                     },
                     layout: {             //  default layout
                       i: widget_name,         //  Must be the same name
-                      x: 6,
-                      y: 2,
-                      w: 12,
-                      h: 4,
+                      x: 7,
+                      y: 3,
+                      w: 10,
+                      h: 3,
                     },
                   };
 
@@ -85,9 +85,9 @@ export default {
     font-family: 'Lato', sans-serif;
   }
   .clockface {
-    font-size: 10rem;
+    font-size: 9rem;
   }
   .clockface .small {
-    font-size: 5rem;
+    font-size: 4rem;
   }
 </style>

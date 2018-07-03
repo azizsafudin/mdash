@@ -22,7 +22,7 @@ const manifest =  {
                     layout: {             //  default layout
                       i: widget_name,         //  Must be the same name
                       x: 9,
-                      y: 6,
+                      y: 7,
                       w: 6,
                       h: 1,
                     },
@@ -46,10 +46,10 @@ export default {
   },
   mounted() {
     this.getDate();
-    setTimeout(
-      this.getDate(),
-      moment("24:00:00", "hh:mm:ss").diff(moment(), 'seconds')
-    );
+//    setTimeout(
+//      this.getDate(),
+//      moment("24:00:00", "hh:mm:ss").diff(moment(), 'seconds')
+//    );
   },
   methods: {
     getDate() {

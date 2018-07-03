@@ -1,7 +1,6 @@
 <template>
   <div>
     <navigation @clicked="navClicked"></navigation>
-    <section class="section">
       <grid-layout
         :layout="layout"
         :col-num="24"
@@ -24,7 +23,6 @@
           <component :is="item.i"></component>
         </grid-item>
       </grid-layout>
-    </section>
     <widget-list @close="showWidgetList = false" v-if="showWidgetList" @add="addWidget" @remove="removeWidget"></widget-list>
     <settings @close="showSettings = false" v-if="showSettings"></settings>
   </div>

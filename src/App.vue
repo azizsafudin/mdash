@@ -6,28 +6,64 @@
 
 <script>
 import Home from './components/Home';
+import storage from './helpers/storage';
+import moment from 'moment';
 
 export default {
   name: 'App',
   components: {
     Home,
   },
-  data: () => ({}),
+  data: () => ({
+    background: storage.get('mdash-background'),
+  }),
   computed: { },
   created() { },
-  mounted() { },
-  methods: { },
+  mounted() {
+    let date = moment().format('dddd, Do MMMM YYYY');
+    let index = this.mod(this.hash(date), this.background.length);
+    document.body.style.backgroundImage = 'url("'+this.background[index].filename+ '")';
+  },
+  methods: {
+    hash(string){
+      let hash = 0;
+      if (string.length === 0) return hash;
+      for (let i = 0; i < string.length; i++) {
+        let char = string.charCodeAt(i);
+        hash = ((hash<<5)-hash)+char;
+        hash = hash & hash; // Convert to 32bit integer
+      }
+      return hash;
+    },
+    mod(n, m) {
+      return ((n % m) + m) % m;
+    }
+  },
 };
 </script>
 
 <style lang="scss">
   @import 'assets/css/global.scss';
-  #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  body {
+    background: url('/static/images/background-8.jpg')no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    height: 100%;
+  }
+  img.bg {
+    /* Set rules to fill background */
+    min-height: 100%;
+    min-width: 1024px;
+
+    /* Set up proportionate scaling */
+    width: 100%;
+    height: auto;
+
+    /* Set up positioning */
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
 </style>

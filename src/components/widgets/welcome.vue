@@ -37,7 +37,7 @@ const manifest =    {
                       layout: {
                         i: widget_name,
                         x: 8,
-                        y: 7,
+                        y: 8,
                         w: 8,
                         h: 1,
                       }

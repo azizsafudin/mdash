@@ -30,10 +30,7 @@ span, p, a, label {
   background: none;
 }
 
-html {
-  background: url('/static/img/background-2.jpg') no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+html, body {
+  background-color: transparent;
+  height: 100%;
 }

@@ -2,8 +2,8 @@
 
 # —mdash
 
-> A dashboard for chrome browser
-> Made for [msociety](https://github.com/SGTinkers). Learn about vue components by making widgets.
+A fully customisable dashboard for your browser.
+
 ## Build Setup
 
 ``` bash
@@ -33,6 +33,7 @@ const manifest =  {
                       optionOne:{
                         name: 'First option',
                         value: true,
+                        tooltip: 'An optional tooltip to explain more.',
                         type: 'boolean',
                       },
                       optionTwo:{
@@ -83,9 +84,18 @@ export { default as widgetN } from './widgetN.vue'
 ```javascript
 import storage from 'src/helpers/storage';
 
-//get dark mode flag from mdash settings.
+//get dark mode flag from mdash settings. (Kind of important to make your widget react to user selecting dark mode)
 let dark_mode = storage.getSettings('mdash').dark.value;
 
+//save arbitrary data for your widget to localStorage
+storage.set('my_widget', data);
+```
+
+## Settings
+The `settings` key in the manifest allows you to let users change and set certain preferences for your widget.
+These options will appear in the settings tab. This is different from normal getting and setting `storage`, since those data won't appear in the settings tab.
+
+```javascript
 //get settings (defined above in manifest) for your widget
 let my_widget_settings = storage.getSettings('mywidget');
 
@@ -95,9 +105,21 @@ storage.setSettings('mywidget');
 Use `storage.getSettings(widget_name).<setting>.value` to access saved settings for your own widget. 
 Or `storage.getSettings('mdash').<setting>.value` for mdash settings.
 
+```javascript
+//manifest
+settings: {             
+            optionOne:{
+              name: 'First option',             //  a human readable label for this setting    
+              value: true,                      //  default value (this will be changed by the user)
+              tooltip: 'This is a tooltip.',    //  tooltip to display more info about the setting
+              type: 'boolean',                  //  type of setting: boolean or string (for now).
+            }
+``` 
+
+## Other notes
 For now you have to use `localStorage.clear()` every time you make a change to your widget's manifest for changes to take effect (basically resetting everything).
 
-Widget names have to be unique, check `widgets/index.js` to make sure yours is unique, if not one will override the other.
+Widget names have to be unique, check `widgets/index.js` to make sure yours is unique.
 
 ## To do
 - Add a way to select background image

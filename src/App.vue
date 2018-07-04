@@ -8,6 +8,7 @@
 import Home from './components/Home';
 import storage from './helpers/storage';
 import moment from 'moment';
+import store from './store';
 
 export default {
   name: 'App',
@@ -15,26 +16,39 @@ export default {
     Home,
   },
   data: () => ({
-    settings: storage.getSettings('mdash'),
     background: storage.get('mdash-background'),
   }),
-  computed: { },
-  created() { },
+  computed: {
+    settings(){
+      return store.getters.settings.mdash;
+    }
+  },
   mounted() {
-    if(!this.settings.showImage.value){
-      document.body.style.backgroundColor = this.settings.bgColour.value;
+    this.setBg();
+  },
+  watch:{
+    settings: {
+      handler() {
+        this.setBg();
+      },
+      deep: true
     }
-    else if(this.settings.randomBg.value) {
-      let date = moment().format('dddd, Do MMMM YYYY');
-      let index = this.mod(this.hash(date), this.background.length);
-      document.body.style.backgroundImage = 'url("' + this.background[index].filename + '")';
-    }
-    else{
-      document.body.style.backgroundImage = url('/static/images/background-8.jpg');
-    }
-
   },
   methods: {
+    setBg(){
+      if(!this.settings.showImage.value){
+        document.body.style.backgroundColor = this.settings.bgColour.value;
+        document.body.style.backgroundImage = '';
+      }
+      else if(this.settings.randomBg.value) {
+        let date = moment().format('dddd, Do MMMM YYYY');
+        let index = this.mod(this.hash(date), this.background.length);
+        document.body.style.backgroundImage = 'url("' + this.background[index].filename + '")';
+      }
+      else{
+        document.body.style.backgroundImage = 'url("/static/images/background-8.jpg")';
+      }
+    },
     hash(string){
       let hash = 0;
       if (string.length === 0) return hash;

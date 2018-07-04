@@ -49,16 +49,18 @@
 </template>
 
 <script>
-import storage from '../../helpers/storage'
+import store from '../../store'
 
 export default {
   name: 'Navigation',
   data: () => ({
     showLogo: true,
     showEdit: true,
-    dark: storage.getSettings('mdash').dark.value,
   }),
   computed: {
+    dark(){
+      return store.getters.settings.mdash.dark.value;
+    },
     theme(){
       return {
        'has-text-white': this.dark,

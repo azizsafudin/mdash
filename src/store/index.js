@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import storage from '../helpers/storage';
 
 Vue.use(Vuex);
 
@@ -11,9 +10,9 @@ const SET_LAYOUT = 'SET_LAYOUT';
 
 const store = new Vuex.Store({
   state: {
-    settings: storage.get('mdash-settings'),
-    location: storage.get('mdash-location'),
-    layout: storage.get('mdash-layout'),
+    settings: JSON.parse(localStorage.getItem('mdash-settings')),
+    location: JSON.parse(localStorage.getItem('mdash-location')),
+    layout: JSON.parse(localStorage.getItem('mdash-layout')),
   },
   getters: {
     location: state => {
@@ -29,18 +28,18 @@ const store = new Vuex.Store({
   mutations: {
     [SET_SETTINGS] (state, payload) {
       state.settings = payload;
-      storage.set('mdash-settings', payload);
+      localStorage.setItem('mdash-settings', JSON.stringify(payload));
     },
     [REFRESH_SETTINGS] (state) {
-      state.settings = storage.get('mdash-settings');
+      state.settings = JSON.parse(localStorage.getItem('mdash-settings'));
     },
     [SET_LOCATION] (state, payload) {
       state.lang = payload;
-      storage.set('mdash-location', payload);
+      localStorage.setItem('mdash-location', JSON.stringify(payload));
     },
     [SET_LAYOUT] (state, payload){
       state.layout = payload;
-      storage.set('mdash-layout', payload);
+      localStorage.setItem('mdash-layout', JSON.stringify(payload));
     }
   },
 });

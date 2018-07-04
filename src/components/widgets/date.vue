@@ -7,6 +7,7 @@
 <script>
 import moment from 'moment';
 import storage from '../../helpers/storage';
+import store from '../../store';
 
 const widget_name = 'date';
 const manifest =  {
@@ -33,30 +34,30 @@ export default {
   name: manifest.name,
   data: () => ({
     date: '',
-    dark: storage.getSettings('mdash').dark.value,
-    settings: storage.getSettings(manifest.name),
   }),
   manifest: manifest,
   computed: {
+    settings(){
+      return store.getters.settings[manifest.name];
+    },
+    dark(){
+      return store.getters.settings.mdash.dark.value;
+    },
     theme(){
       return {
         'has-text-white': this.dark,
         'has-text-black': !this.dark,
       };
-    }
-  },
-  mounted() {
-    this.getDate();
-//    setTimeout(
-//      this.getDate(),
-//      moment("24:00:00", "hh:mm:ss").diff(moment(), 'seconds')
-//    );
-  },
-  methods: {
-    getDate() {
-      this.date = moment().format(this.settings.format.value);
     },
   },
+  mounted() {
+    this.date = moment().format(this.settings.format.value);
+  },
+  watch:{
+    'settings.format.value'() {
+      this.date = moment().format(this.settings.format.value)
+    }
+  }
 };
 </script>
 

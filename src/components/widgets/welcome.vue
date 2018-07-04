@@ -27,7 +27,8 @@
 </template>
 
 <script>
-import storage from '../../helpers/storage';    //  use this to access localStorage
+import storage from '../../helpers/storage'
+import store from '../../store';
 import moment from 'moment';
 
 const widget_name = 'welcome';                  //  make it same as file name for ease
@@ -47,7 +48,6 @@ export default {
   data: () => ({
     name: storage.get(manifest.name),
     newName: storage.get(manifest.name),
-    dark: storage.getSettings('mdash').dark.value,
     editMode: false,
     msg: {
       first_greeting: 'Hello there, what\'s your name?',
@@ -82,6 +82,9 @@ export default {
   computed: {
     greeting(){
       return 'Good ' + this.getGreetingTime(moment()) +',';
+    },
+    dark(){
+      return store.getters.settings.mdash.dark.value;
     },
     isNameSet() {
       return this.name === null ? null: this.name.length > 0;

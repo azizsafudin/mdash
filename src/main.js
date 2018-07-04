@@ -72,7 +72,10 @@ new Vue({
               }
               store.commit('SET_LOCATION', obj);
               console.log('mdash: Location updated successfully.');
-            })
+            }).catch(e =>{
+              store.commit('SET_LOCATION', obj);
+              console.warn('mdash: API call failed. Stored coordinates without location name');
+          });
         }
       });
     } else {

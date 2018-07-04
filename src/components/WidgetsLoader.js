@@ -1,5 +1,6 @@
 import * as components from './widgets' // taken from ./widgets/index.js
 import storage from '../helpers/storage'
+import store from '../store';
 import _ from 'lodash'
 
 let widget_list = [];
@@ -30,7 +31,7 @@ if(saved_layout === null || saved_layout.length === 0 && storage.getSettings('md
   layout.push(components.date.manifest.layout);
   layout.push(components.welcome.manifest.layout);
 }
-storage.set('mdash-layout', layout);
+store.commit('SET_LAYOUT', layout);
 
 export default {
   layout: layout,

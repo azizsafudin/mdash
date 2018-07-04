@@ -1,20 +1,14 @@
 <template>
   <transition name="modal">
-    <div class="modal-mask" @click="$emit('close')">
+    <div class="modal-mask" @click="$emit('close'); saveSettings();">
       <div class="modal-wrapper">
         <div class="modal-container notification" v-bind:class="theme" @click.stop>
-          <button class="delete" @click="$emit('close')"></button>
+          <button class="delete" @click="$emit('close'); saveSettings();"></button>
           <div class="level">
             <div class="level-left">
               <h3 class="level-item is-size-5" v-bind:class="theme">&mdash;{{msg.title}}</h3>
             </div>
             <div class="level-right">
-              <a class="level-item button" v-bind:class="theme" @click="saveSettings">
-                <span class="icon" v-bind:class="theme">
-                  <i class="fas fa-save"></i>
-                </span>
-                <span>Save</span>
-              </a>
             </div>
           </div>
           <div class="columns">
@@ -49,7 +43,7 @@
                               :id="key"
                               type="checkbox"
                               :name="key"
-                              class="checkbox switch is-rounded is-rtl"
+                              class="checkbox switch is-rounded"
                             >
                             <label class="label" :for="key"></label>
                           </div>
@@ -68,8 +62,20 @@
                           </div>
                         </div>
                       </div>
-                    </div>
+                      <!--for colours-->
+                      <div class="field-body" v-if="setting[key].type === 'colour' || setting[key].type === 'color' ">
+                        <div class="field">
+                          <div class="control">
+                            <input
+                              v-model="setting[key].value"
+                              type="color"
+                              class="input is-rounded"
+                            >
+                          </div>
+                        </div>
+                      </div>
                       <!--Implement other types of settings here-->
+                    </div>
                     </div>
                   </div>
                 </div>
@@ -88,7 +94,7 @@
 
 <script>
 import storage from '../helpers/storage';
-import * as components from './WidgetsLoader'
+import store from '../store';
 
 export default {
   name: 'Settings',
@@ -96,8 +102,8 @@ export default {
     msg: {
       title: 'settings',
     },
-    settings: storage.get('mdash-settings'),
-    dark: storage.getSettings('mdash').dark.value,
+    settings: store.getters.settings,
+    dark: store.getters.settings.mdash.dark.value,
     activeTab: 'general',
   }),
   methods:{
@@ -105,17 +111,16 @@ export default {
       this.activeTab = tabName;
     },
     saveSettings(){
-      storage.set('mdash-settings', this.settings);
-      location.reload();
+      store.commit('SET_SETTINGS', this.settings);
     }
   },
   computed:{
     theme(){
       return{
-        'has-text-white': this.dark,
-        'has-text-black': !this.dark,
-        'is-dark': this.dark,
-        'is-light': !this.dark,
+        'has-text-white': store.getters.settings.mdash.dark.value,
+        'has-text-black': !store.getters.settings.mdash.dark.value,
+        'is-dark': store.getters.settings.mdash.dark.value,
+        'is-light': !store.getters.settings.mdash.dark.value,
       }
     },
   }
@@ -142,7 +147,7 @@ export default {
   }
 
   .modal-container {
-    width: 70%;
+    width: 50%;
     min-height:50%;
     max-height:90%;
     margin: 0px auto;

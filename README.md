@@ -75,51 +75,76 @@ export { default as widget2 } from './widget2.vue'
 export { default as widgetN } from './widgetN.vue'
 //                    ^                   ^
 //  All names here MUST be the same as the name in the manifest.
-//  This means that widgets can only have one word names.
 //  Use underscores for names with spaces.
 ```
 
-## Helpers
+## Storage
 
 ```javascript
-import storage from 'src/helpers/storage';
+import storage from '/src/helpers/storage';
 
-//get dark mode flag from mdash settings. (Kind of important to make your widget react to user selecting dark mode)
-let dark_mode = storage.getSettings('mdash').dark.value;
-
-//save arbitrary data for your widget to localStorage
+//  save arbitrary data for your widget to localStorage
 storage.set('my_widget', data);
-```
 
+//  get that data.
+storage.get('my_widget', data);
+```
+## Reactive store (Vuex)
+
+```javascript
+import store from '/src/store';
+
+computed:{
+  //  get dark mode flag from mdash settings. 
+  //  (Kind of important to make your widget react to user selecting dark mode)
+  dark(){
+    return store.getters.settings.mdash.dark.value;
+  }
+}
+```
 ## Settings
 The `settings` key in the manifest allows you to let users change and set certain preferences for your widget.
 These options will appear in the settings tab. This is different from normal getting and setting `storage`, since those data won't appear in the settings tab.
 
 ```javascript
-//get settings (defined above in manifest) for your widget
-let my_widget_settings = storage.getSettings('mywidget');
+import store from '/src/store'
 
-//save changes to my widget's settings
-storage.setSettings('mywidget');
+//  get settings for your widget
+data: {
+  settings: store.getters.settings[manifest.name]; //  manifest should have been already defined above.
+ }
+
+//  Watch for changes
+watch: {
+  settings: {
+    handler(val){
+      //  do stuff when settings change.
+      console.log('These are the new settings: '+val);
+    }
+    deep: true,   //  watch changes on ALL object properties.
+  },
+},
 ```
-Use `storage.getSettings(widget_name).<setting>.value` to access saved settings for your own widget. 
-Or `storage.getSettings('mdash').<setting>.value` for mdash settings.
+
+Use `store.getters.settings.<widget_name>.<setting>.value` to access saved settings for your own widget. 
+Or `store.getters.settings.mdash.<setting>.value` for mdash settings. 
+There is no need to set settings since the defaults in the manifest will be loaded automatically.
 
 ```javascript
-//manifest
+//  manifest
 settings: {             
             optionOne:{
               name: 'First option',             //  a human readable label for this setting    
               value: true,                      //  default value (this will be changed by the user)
               tooltip: 'This is a tooltip.',    //  tooltip to display more info about the setting
-              type: 'boolean',                  //  type of setting: boolean or string (for now).
+              type: 'boolean',                  //  type of setting: boolean, string, or color (for colorpicker).
             }
 ``` 
 
 ## Other notes
 For now you have to use `localStorage.clear()` every time you make a change to your widget's manifest for changes to take effect (basically resetting everything).
 
-Widget names have to be unique, check `widgets/index.js` to make sure yours is unique.
+Widget names have to be unique, check [widgets/index.js](src/components/widgets/index.js) to make sure yours is unique.
 
 ## To do
 - Add a way to select background image

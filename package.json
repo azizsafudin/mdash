@@ -11,6 +11,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "bulma": "^0.6.2",
     "bulma-extensions": "^2.2.1",
     "lodash": "^4.17.10",

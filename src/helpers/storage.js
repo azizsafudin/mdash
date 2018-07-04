@@ -1,3 +1,5 @@
+import store from '../store';
+
 export default {
   get(key) {
     try {
@@ -43,6 +45,7 @@ export default {
       if(settings === null) settings = {};
       settings[widget] = val;
       localStorage.setItem('mdash-settings', JSON.stringify(settings));
+      store.commit('REFRESH_SETTINGS');
     } catch (e) {
       throw e;
     }

@@ -12,7 +12,7 @@
 <!-- Javascript goes here-->
 <!--https://vuejs.org/v2/guide/components.html-->
 <script>
-import storage from '../../helpers/storage';    //  use this to access localStorage
+import store from '../../store';
 
 const widget_name = 'example';                  //  make it same as file name for ease
 const manifest =    {
@@ -43,8 +43,7 @@ const manifest =    {
 export default {
   name: manifest.name,
   data: () => ({
-//    settings: storage.getSettings(manifest.name),
-    dark: storage.getSettings('mdash').dark.value,
+    dark: store.getters.settings.mdash.dark.value,
   }),
   manifest: manifest, // REQUIRED
   computed: {

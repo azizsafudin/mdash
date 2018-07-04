@@ -53,7 +53,8 @@ new Vue({
           longitude: pos.coords.longitude,
         };
 
-        if(saved_pos === null || saved_pos !== null && (saved_pos.latitude !== pos.coords.latitude  || saved_pos.longitude !== pos.coords.longitude)){
+        if(saved_pos === null || saved_pos !== null &&
+          (saved_pos.latitude !== pos.coords.latitude  || saved_pos.longitude !== pos.coords.longitude || !saved_pos.city_long)){
           axios.get(url)
             .then(res => {
               let locality = res.data.results[0].address_components.filter(function(o){

@@ -32,8 +32,8 @@ else bg = config.default_bg;
 storage.set('mdash-background', bg);
 console.log('mdash: Background images loaded.');
 
-storage.set('installed-0.1.0', true);
-console.log('mdash: Current version: 0.1.0');
+storage.set('installed-0.1.1', true);
+console.log('mdash: Current version: 0.1.1');
 
 
 
@@ -45,7 +45,7 @@ new Vue({
   mounted() {
     //get user location
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function (pos) {
+      navigator.geolocation.getCurrentPosition(pos => {
         let saved_pos = storage.get('mdash-location');
         let url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${pos.coords.latitude},${pos.coords.longitude}`;
         let obj = {
@@ -57,10 +57,10 @@ new Vue({
           (saved_pos.latitude !== pos.coords.latitude  || saved_pos.longitude !== pos.coords.longitude || !saved_pos.city_long)){
           axios.get(url)
             .then(res => {
-              let locality = res.data.results[0].address_components.filter(function(o){
+              let locality = res.data.results[0].address_components.filter(o => {
                 return o.types.indexOf('locality') > -1;
               });
-              let country = res.data.results[0].address_components.filter(function(o){
+              let country = res.data.results[0].address_components.filter(o => {
                 return o.types.indexOf('country') > -1;
               });
               if(locality.length > 0){

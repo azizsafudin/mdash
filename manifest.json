@@ -1,7 +1,7 @@
 {
   "name": "mdash",
   "description": "A sleek customisable dashboard",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "manifest_version": 2,
   "permissions": ["geolocation"],
   "chrome_url_overrides": {

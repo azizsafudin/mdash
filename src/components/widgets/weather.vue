@@ -1,52 +1,59 @@
 <template>
-  <div class="main is-unselectable">
-    <div class="clockface" v-bind:class="theme">{{clock.time}}<span class="small">{{clock.seconds}}</span>
-      <span class="small">{{clock.label}}</span>
+  <div class="main">
+    <div class="item is-unselectable" v-if="tempF !== ''">
+      <span :class="theme" class="is-size-4" v-if="!settings.metric.value">{{tempF}}</span>
+      <span :class="theme" class="is-size-4" v-else>{{tempC}}</span>
+      <span :class="theme" class="is-size-4">°</span>
+      <span :class="theme" class="is-size-6" v-if="!settings.metric.value">F</span>
+      <span :class="theme" class="is-size-6" v-else>C</span>
+      <span :class="theme" class="is-size-7">{{location.city_long}}, {{location.country_short}}</span>
     </div>
   </div>
 </template>
 <script>
+import axios from 'axios';
 import moment from 'moment';
 import storage from '../../helpers/storage';
+import store from '../../store';
+import keys from '../../secret';
 
-const widget_name = 'clock';
+const api_url = 'https://api.openweathermap.org/data/2.5/weather?';
+const api_key = keys.weather_api_key;
+const widget_name = 'weather';
 const manifest =  {
                     name: widget_name,        //  Widget name
-                    description: 'Simple clock widget',
+                    description: 'Simple weather widget',
                     settings: {
-                      show24h: {
-                        name: 'Show 24 hours',
+                      metric: {
+                        name: 'Use Celcius',
                         value: true,
                         type: 'boolean',
-                      },
-                      showSeconds: {
-                        name: 'Show seconds',
-                        value: false,
-                        type: 'boolean',
-                      },
+                      }
                     },
                     layout: {             //  default layout
                       i: widget_name,         //  Must be the same name
-                      x: 7,
-                      y: 3,
-                      w: 10,
-                      h: 3,
+                      x: 22,
+                      y: 1,
+                      w: 2,
+                      h: 2,
                     },
                   };
 
 export default {
   name: manifest.name,
   data: () => ({
-    clock: {
-      time: '',
-      seconds: '',
-      label: '',
-    },
-    dark: storage.getSettings('mdash').dark.value,
-    settings: storage.getSettings(manifest.name),
+    location: storage.get('mdash-location') ,
+    tempF: '',
+    tempC: '',
   }),
   manifest: manifest,
   computed: {
+    dark(){
+      return store.getters.settings.mdash.dark.value;
+    },
+    settings(){
+      return store.getters.settings[manifest.name];
+    },
     theme(){
       return {
         'has-text-white': this.dark,
@@ -55,39 +62,61 @@ export default {
     }
   },
   mounted() {
-    this.load();
-    setInterval(this.getTime, 60000); //  update time every minute.
-    if(this.settings.showSeconds.value) setInterval(this.getSeconds, 1000); //  update seconds every second.
+    let weather = storage.get('weather');
+    if(weather !== null){
+      this.tempC = weather.tempC;
+      this.tempF = weather.tempF;
+    }
+
+    let loc = storage.get('mdash-location');
+    let url = api_url + 'lat='+loc.latitude+'&lon='+loc.longitude+'&units=metric&appid='+api_key;
+    let make_call = false;
+
+    if(weather !== null) {
+      let now = moment(new Date());
+      let last_checked = moment(new Date(storage.get('weather').last_checked));
+      make_call = now.diff(last_checked, 'hours') > 3;
+    }
+
+    if (weather === null || make_call) {
+        axios.get(url)
+          .then(res => {
+            console.log('mdash (Weather): Loaded weather data.');
+            this.tempC = Math.round(res.data.main.temp * 10) / 10;
+            this.tempF = this.c2f(res.data.main.temp);
+
+            storage.set('weather', {
+              last_checked: moment(new Date()),
+              tempC: this.tempC,
+              tempF: this.tempF,
+            });
+          });
+      }
+
   },
-  methods: {
-    getTime() {
-      let format = this.settings.show24h.value ? 'H:mm' : 'h:mm';
-      this.clock.time = moment().format(format);
-      this.getLabel();
-    },
-    getSeconds(){
-      if(this.settings.showSeconds.value)this.clock.seconds = moment().format(':ss');
-    },
-    getLabel() {
-      if(!this.settings.show24h.value)this.clock.label = moment().format('A');
-    },
-    load() {
-      this.getTime();
-      this.getSeconds();
-    },
+  watch:{
+    'settings.metric.value'(){
+      if(this.settings.metric.value){
+
+      }
+    }
   },
+  methods:{
+    c2f(temp){
+      return Math.round(((temp * (9/5)) + 32) * 10) / 10;
+    }
+  }
 };
 </script>
 
 <style scoped>
   .main {
+    width: 100px;
+    height: 100px;
     text-align: center;
     font-family: 'Lato', sans-serif;
   }
-  .clockface {
-    font-size: 9rem;
-  }
-  .clockface .small {
-    font-size: 4rem;
+  .item {
+    margin:auto;
   }
 </style>
